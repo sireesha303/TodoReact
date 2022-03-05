@@ -1,0 +1,60 @@
+*{
+    margin: 0px;
+}
+
+.app-bg-container{
+    background-image: linear-gradient(to left, #eb4dce,#34eb9e);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-todo-container{
+    background-color: white;
+    height: 76vh;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    padding: 10px;
+}
+
+.main-heading{
+    color: white;
+    font-size: 40px;
+    font-family: 'roboto';
+    font-weight: bold;
+    margin: 8px;
+}
+
+.input-el{
+    border:2px solid black;
+    border-radius: 8px;
+    width:25vw;
+    padding:8px;
+    margin-right: 5px;
+
+}
+
+.label-el{
+    color: #34eb9e;
+    font-family: sans-serif;
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.task-add-btn{
+    background-color: blue;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+}
+
+.btn-input-container{
+    display: flex;
+    flex-direction: row;
+}
