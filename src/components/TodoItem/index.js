@@ -35,7 +35,6 @@ class TodoItem extends Component{
         const {isChecked,isDeleted} = this.state;
         const {id,title} = this.props;
         const labelClass = isChecked ? "todo-text-crossed":"todo-text";
-        console.log("in todo item id:",id)
 
         if(!isDeleted){
             return(
