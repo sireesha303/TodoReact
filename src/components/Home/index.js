@@ -2,52 +2,56 @@ import {Component} from 'react'
 import './index.css'
 import TodoList  from'../TodoList'
 
-const todoList =[
-    {
-        id:1,
-        title:'learning frontend'
-    },
-    {
-        id:2,
-        title:'learning backend'
-    }
-    ,{
-        id:3,
-        title:'Watching Movie'
-    },{
-        id:4,
-        title:'learning frontend'
-    },
-    {
-        id:5,
-        title:'learning backend'
-    }
-    ,{
-        id:6,
-        title:'Watching Movie'
-    },{
-        id:7,
-        title:'learning frontend'
-    },
-    {
-        id:8,
-        title:'learning backend'
-    }
-    ,{
-        id:9,
-        title:'Watching Movie'
-    },{
-        id:10,
-        title:'learning backend'
-    }
-    ,{
-        id:11,
-        title:'Watching Movie'
-    }
-]
+// const todoList =[
+//     {
+//         id:1,
+//         title:'learning frontend'
+//     },
+//     {
+//         id:2,
+//         title:'learning backend'
+//     }
+//     ,{
+//         id:3,
+//         title:'Watching Movie'
+//     },{
+//         id:4,
+//         title:'learning frontend'
+//     },
+//     {
+//         id:5,
+//         title:'learning backend'
+//     }
+//     ,{
+//         id:6,
+//         title:'Watching Movie'
+//     },{
+//         id:7,
+//         title:'learning frontend'
+//     },
+//     {
+//         id:8,
+//         title:'learning backend'
+//     }
+//     ,{
+//         id:9,
+//         title:'Watching Movie'
+//     },{
+//         id:10,
+//         title:'learning backend'
+//     }
+//     ,{
+//         id:11,
+//         title:'Watching Movie'
+//     }
+// ]
 
 class Home extends Component{
-    state = {userSearchInput:""}
+    state = {userSearchInput:"",todoList:[]}
+
+    componentDidMount() {
+        this.loadMyTasks()
+      }
 
     onChangeOfInputEl = event =>{
         console.log(event.target.value);
@@ -70,9 +74,26 @@ class Home extends Component{
         fetchRes.then(res =>res.json()).then(d => {
                             console.log(d)
         })
+        this.setState({userSearchInput:""});
+        this.loadMyTasks();
     }
- 
+    loadMyTasks = async () =>{
+        const url = "https://todolist-django-backend.herokuapp.com/todo/";
+        let options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 
+                    'application/json;charset=utf-8'
+            },
+        }
+        const response = await fetch(url, options);
+        const todoList = await response.json()
+        this.setState({todoList:todoList})
+    }
+
     render(){
+       const {todoList} = this.state;
+
         return(
             <div className='app-bg-container'>
                 <h1 className='main-heading'>My Tasks</h1>
@@ -80,7 +101,7 @@ class Home extends Component{
 
                     <label htmlFor='todo-input' className='label-el'>Create Task</label>
                     <div className='btn-input-container'>
-                        <input className='input-el' id='todo-input' type="text" onChange={this.onChangeOfInputEl}/>
+                        <input className='input-el' id='todo-input' type="text" onChange={this.onChangeOfInputEl} value={this.state.userSearchInput}/>
                         <button className='task-add-btn' onClick={this.onClickOfAddTask}>Add Task</button>
                     </div>
                     <TodoList  todoList={todoList}/>
