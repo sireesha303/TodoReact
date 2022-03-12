@@ -7,7 +7,7 @@ const TodoList = props =>{
     return(
         <div className='todo-list-container'>
             <ul className="todo-list">
-                {todoList.map(eachTodo=>(<TodoItem title={eachTodo.title} key={eachTodo.id}/>))}
+                {todoList.map(eachTodo=>(<TodoItem title={eachTodo.title} key={eachTodo.id} id={eachTodo.id}/>))}
             </ul>
         </div>
        

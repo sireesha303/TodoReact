@@ -2,52 +2,65 @@ import './index.css'
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Component } from 'react';
 
-// const TodoItem = props =>{
-//     const {title,id} = props;
-//     console.log(title);
-    
-//     return(
-        
-//         <li className="todo-item-container">
-//             <input type="checkbox" id={id} className="checkbox-el" ></input>
-//             <div className='test-delete-icon'>
-//             <label className="todo-text" htmlFor={id}>{title}</label>
-//             <RiDeleteBin6Fill className='delete-icon'/>
-//             </div>
-            
-//         </li>
-        
-        
-//     )
-// }
 
 class TodoItem extends Component{
     constructor(props){
         super(props);
-        this.state = {isChecked:false}
+        this.state = {isChecked:false, isDeleted:false}
     }
     
     onChangeOfCheckbox = () =>{
         this.setState(prevState=>({isChecked:!prevState.isChecked}))
     }
+    
+    deleteTodo = async () =>{
+        console.log("delte called");
+        const {id} = this.props;
+        const url = `https://todolist-django-backend.herokuapp.com/todo/${id}/`;
+        console.log("url",url);
+        let options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 
+                    'application/json;charset=utf-8'
+            },
+        }
+
+        console.log("delte before fetch");
+        let response = await fetch(url, options);
+        console.log(response);
+        // fetchRes.then(res =>res.json()).then(d => {
+        //                     console.log(d)
+        // })
+        console.log("after before fetch");
+        this.setState({isDeleted:true})
+        
+    }
 
     render(){
-        const {isChecked} = this.state;
+        const {isChecked,isDeleted} = this.state;
         const {id,title} = this.props;
         const labelClass = isChecked ? "todo-text-crossed":"todo-text";
+        console.log("in todo item id:",id)
 
-        return(
-            <li className="todo-item-container">
-                <div className='text-delete-container'>
-                    <div className='input-lable-container'>
-                        <input type="checkbox" id={id} className="checkbox-el" onChange={this.onChangeOfCheckbox}></input>
-                        <label className={labelClass} htmlFor={id}>{title}</label>
-                    </div>
-                    <RiDeleteBin6Fill className='delete-icon'/>
-                </div>
+        if(!isDeleted){
+            return(
+                <li className="todo-item-container">
+                    <div className='text-delete-container'>
+                        <div className='input-lable-container'>
+                            <input type="checkbox" id={id} className="checkbox-el" onChange={this.onChangeOfCheckbox}></input>
+                            <label className={labelClass} htmlFor={id}>{title}</label>
+                        </div>
+                        <button onClick={this.deleteTodo} className="delete-button"><RiDeleteBin6Fill className='delete-icon'/></button>
                         
-            </li>
-        )
+                    </div>
+                            
+                </li>
+            )
+        }
+        else{
+            return null
+        }
 
     }
 }
