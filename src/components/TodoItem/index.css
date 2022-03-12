@@ -18,3 +18,29 @@
     height: 22px;
     width:40px;
 }
+
+.todo-text-crossed{
+    color:white;
+    margin: 10px;
+    font-family: "roboto";
+    font-size: 20px;
+    text-align: center;
+    text-decoration: line-through;
+}
+
+.text-delete-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.input-lable-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.delete-icon{
+    height: 40px;
+    margin-right:15px;
+    width:23px;
+}

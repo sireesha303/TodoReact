@@ -71,7 +71,7 @@ class Home extends Component{
                             console.log(d)
         })
     }
-
+ 
     render(){
         return(
             <div className='app-bg-container'>
