@@ -14,7 +14,6 @@ class TodoItem extends Component{
     }
     
     deleteTodo = async () =>{
-        console.log("delte called");
         const {id} = this.props;
         const url = `https://todolist-django-backend.herokuapp.com/todo/${id}/`;
         console.log("url",url);
@@ -26,13 +25,8 @@ class TodoItem extends Component{
             },
         }
 
-        console.log("delte before fetch");
         let response = await fetch(url, options);
         console.log(response);
-        // fetchRes.then(res =>res.json()).then(d => {
-        //                     console.log(d)
-        // })
-        console.log("after before fetch");
         this.setState({isDeleted:true})
         
     }
