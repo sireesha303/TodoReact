@@ -1,7 +1,6 @@
 import './index.css'
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Component } from 'react';
-import { Modal, Button } from "react-bootstrap";
 
 class TodoItem extends Component{
     constructor(props){
@@ -42,7 +41,7 @@ class TodoItem extends Component{
     }
 
     render(){
-        const {isChecked,isDeleted,isOpen} = this.state;
+        const {isChecked,isDeleted} = this.state;
         const {id,title} = this.props;
         const labelClass = isChecked ? "todo-text-crossed":"todo-text";
 
@@ -55,20 +54,6 @@ class TodoItem extends Component{
                                 <label className={labelClass} htmlFor={id}>{title}</label>
                             </div>
                             <button onClick={this.deleteTodo} className="delete-button"><RiDeleteBin6Fill className='delete-icon'/></button>   
-                            <Modal show={isOpen} onHide={this.closeModal}>
-                            <Modal.Header closeButton>
-                            <Modal.Title>Modal heading</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>{title}</Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={this.closeModal}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={this.closeModal}>
-                                Save Changes
-                            </Button>
-                            </Modal.Footer>
-                        </Modal>
                         </div>      
                 </li>     
             )

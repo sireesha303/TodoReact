@@ -1,26 +1,35 @@
-import {useState} from 'react'
+import {useState,useContext} from 'react'
 import Cookies from 'js-cookie';
 import { useNavigate,Link } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 
 import "./index.css"
+import UserContext from '../../context/UserContext';
 
 
 const Login = () => {
+    const value = useContext(UserContext); 
+    // console.log(value)
+    const {setUserDetails} = value;
+
     const [username,setUsername] = useState()
     const [password,setPassword] = useState()
-    // const [loginError,setLoginError] = useState({showLoginError:false,loginErrorMsg:""});
+    const [loginError,setLoginError] = useState({showLoginError:false,loginErrorMsg:""});
 
     const navigate = useNavigate();
 
     const onLoginSuccess = (accessToken,refreshToken) =>{
-        Cookies.set('todo-access-token',accessToken)
-        Cookies.set('todo-refresh-token',refreshToken)
+        Cookies.set('todo-access-token',accessToken);
+        Cookies.set('todo-refresh-token',refreshToken);
+        var decodedData = jwt_decode(accessToken);
+        // console.log(decodedData);
+        setUserDetails(decodedData.name,decodedData.user_id);
         navigate("/");
     }
 
     const onLoginFailure = (errorMsg) =>{
-        // setLoginError({showLoginError:true,loginErrorMsg:errorMsg})
+        setLoginError({showLoginError:true,loginErrorMsg:errorMsg})
     }
 
     const onFormSubmit = async event => {
@@ -45,17 +54,15 @@ const Login = () => {
             onLoginSuccess(data.access,data.refresh)
         }
         else{
-            onLoginFailure(data.error_msg)
+            onLoginFailure(data.detail)
         }
     }
 
     const onChangeOfUsername = event => {
-        // console.log(event.target.value)
         setUsername(event.target.value)
     }
 
     const onChangeOfPassword = event =>{
-        // console.log(event.target.value)
         setPassword(event.target.value)
     }
 
@@ -93,6 +100,7 @@ const Login = () => {
             <div className="login-contents-container">
             <form type="submit" className="form-container" onSubmit={onFormSubmit}>
                 <h1 className="login-header">Login</h1>
+                <p className='signup-link'>Don't have an account?<Link to="/register">Register Now</Link></p>
                 <div className="username-password-container">
                    {renderUserName()}
                    {renderPassWord()}   
@@ -100,7 +108,7 @@ const Login = () => {
                 <div className="submit-btn-container"> 
                     <button type="submit" className="submit-btn">Login</button>
                 </div>
-                <p className='signup-link'>Don't have an account?<Link to="/register">Register Now</Link></p>
+                {loginError.showLoginError && <p className='login-fail-msg'>*{loginError.loginErrorMsg}</p>}
             </form>
             <div>
                 <img src="https://res.cloudinary.com/sireesha30/image/upload/v1656604518/todo_zefcgt.jpg" 
