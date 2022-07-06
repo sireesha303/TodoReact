@@ -1,57 +1,74 @@
 import './index.css'
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Component } from 'react';
+import jsCookie from 'js-cookie';
+import UserContext from '../../context/UserContext';
 
 class TodoItem extends Component{
     constructor(props){
         super(props);
-        this.state = {isChecked:false, isDeleted:false,isOpen:false}
+        this.state = {isCompleted:this.props.todo.isCompleted,isDeleted:false}
     }
-    
-    onChangeOfCheckbox = () =>{
-        this.setState(prevState=>({isChecked:!prevState.isChecked}))
+    static contextType = UserContext
+
+    onChangeOfCheckbox = async () =>{
+        const {todo} = this.props;
+        const {id,title,isCompleted,owner} = todo;
+
+        const todoUpdated = {id:id,title:title,is_completed:!isCompleted,owner:owner}
+
+        var jwtToken = jsCookie.get('todo-access-token');
+        const url = `http://127.0.0.1:8000/todos/${id}/update/`;
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 
+                    'application/json;charset=utf-8',
+                Authorization: `Bearer ${jwtToken}`, 
+            },
+            body: JSON.stringify(todoUpdated)
+        }
+
+        let response = await fetch(url, options);
+        // console.log(response);
+        this.setState({isCompleted:!isCompleted})
     }
     
     deleteTodo = async () =>{
         const {id} = this.props;
-        const url = `https://todolist-django-backend.herokuapp.com/todo/${id}/`;
-        console.log("url",url);
+        const url = `http://127.0.0.1:8000/todos/${id}/delete/`;
+
+        var jwtToken = jsCookie.get('todo-access-token');
+
         let options = {
             method: 'DELETE',
             headers: {
                 'Content-Type': 
-                    'application/json;charset=utf-8'
+                    'application/json;charset=utf-8',
+                Authorization: `Bearer ${jwtToken}`, 
             },
         }
 
         let response = await fetch(url, options);
-        console.log(response);
         this.setState({isDeleted:true})
         
     }
 
-    openModal = () =>{
-        console.log("opende modal");
-        this.setState({isOpen:true})
-    }
-
-    closeModal = () =>{
-        console.log("closed modal");
-        this.setState({isOpen:false})
-    }
+    
 
     render(){
-        const {isChecked,isDeleted} = this.state;
-        const {id,title} = this.props;
-        const labelClass = isChecked ? "todo-text-crossed":"todo-text";
+        const {isDeleted,isCompleted} = this.state;
+        const {todo} = this.props;
+        const {id,title} = todo;
+        const labelClass = isCompleted ? "todo-text-crossed":"todo-text";
 
         if(!isDeleted){
             return(
                 <li className="todo-item-container">
                         <div className='text-delete-container'>
                             <div className='input-lable-container'>
-                                <input type="checkbox" id={id} className="checkbox-el" onChange={this.onChangeOfCheckbox}></input>
-                                <label className={labelClass} htmlFor={id}>{title}</label>
+                            {isCompleted ? <input type="checkbox" id={id} className="checkbox-el" onChange={this.onChangeOfCheckbox} checked></input>:<input type="checkbox" id={id} className="checkbox-el" onChange={this.onChangeOfCheckbox}></input>}
+                            <label className={labelClass} htmlFor={id}>{title}</label>
                             </div>
                             <button onClick={this.deleteTodo} className="delete-button"><RiDeleteBin6Fill className='delete-icon'/></button>   
                         </div>      
