@@ -5,50 +5,6 @@ import Header from '../Header';
 import Cookies from 'js-cookie';
 
 
-// const todoList =[
-//     {
-//         id:1,
-//         title:'learning frontend'
-//     },
-//     {
-//         id:2,
-//         title:'learning backend'
-//     }
-//     ,{
-//         id:3,
-//         title:'Watching Movie'
-//     },{
-//         id:4,
-//         title:'learning frontend'
-//     },
-//     {
-//         id:5,
-//         title:'learning backend'
-//     }
-//     ,{
-//         id:6,
-//         title:'Watching Movie'
-//     },{
-//         id:7,
-//         title:'learning frontend'
-//     },
-//     {
-//         id:8,
-//         title:'learning backend'
-//     }
-//     ,{
-//         id:9,
-//         title:'Watching Movie'
-//     },{
-//         id:10,
-//         title:'learning backend'
-//     }
-//     ,{
-//         id:11,
-//         title:'Watching Movie'
-//     }
-// ]
-
 class Home extends Component{
     state = {userSearchInput:"",todoList:[]}
 
