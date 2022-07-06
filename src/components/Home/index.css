@@ -3,17 +3,19 @@
 }
 
 .app-bg-container{
-    background-image: linear-gradient(to left, #eb4dce,#34eb9e);
+    background-image: url("https://res.cloudinary.com/sireesha30/image/upload/v1657097356/photo-1561744436-df9ca770d05c_y48lkb.jpg");
+    background-size: cover;
+    /* background-image: linear-gradient(to left, #eb4dce,#34eb9e); */
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
 .app-todo-container{
     background-color: white;
-    height: 76vh;
+    height: 70vh;
     width: 65vw;
     display: flex;
     flex-direction: column;

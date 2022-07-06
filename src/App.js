@@ -1,8 +1,21 @@
 import './App.css';
-import Home from './components/Home/index'
+import { BrowserRouter,Route,Routes } from "react-router-dom";
+
+import Login from './components/Login/index';
+import Home from './components/Home/index';
+import Signup from './components/Signup';
 
 const App = () =>(
-  <Home/>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/register" element={<Signup/>}/>
+    </Routes>
+   
+      
+  </BrowserRouter>
+     
 )
 
 

@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import './index.css'
-import TodoList  from'../TodoList'
+import TodoList  from'../TodoList';
+import Header from '../Header';
 
 // const todoList =[
 //     {
@@ -96,6 +97,7 @@ class Home extends Component{
 
         return(
             <div className='app-bg-container'>
+                <Header />
                 <h1 className='main-heading'>My Tasks</h1>
                 <div className='app-todo-container'>
 
@@ -104,7 +106,7 @@ class Home extends Component{
                         <input className='input-el' id='todo-input' type="text" onChange={this.onChangeOfInputEl} value={this.state.userSearchInput}/>
                         <button className='task-add-btn' onClick={this.onClickOfAddTask}>Add Task</button>
                     </div>
-                    <TodoList  todoList={todoList}/>
+                    {/* <TodoList  todoList={todoList}/> */}
                                     
                 </div>    
             </div>
