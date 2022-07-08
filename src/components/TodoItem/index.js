@@ -29,13 +29,14 @@ class TodoItem extends Component{
             body: JSON.stringify(todoUpdated)
         }
 
+        // eslint-disable-next-line
         let response = await fetch(url, options);
-        // console.log(response);
         this.setState({isCompleted:!isCompleted})
     }
     
     deleteTodo = async () =>{
-        const {id} = this.props;
+        const {todo} = this.props;
+        const {id} = todo
         const url = `http://127.0.0.1:8000/todos/${id}/delete/`;
 
         var jwtToken = jsCookie.get('todo-access-token');
