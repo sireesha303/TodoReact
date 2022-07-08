@@ -1,7 +1,7 @@
 import './index.css'
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Component } from 'react';
-import jsCookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import UserContext from '../../context/UserContext';
 
 class TodoItem extends Component{
@@ -17,7 +17,7 @@ class TodoItem extends Component{
 
         const todoUpdated = {id:id,title:title,is_completed:!isCompleted,owner:owner}
 
-        var jwtToken = jsCookie.get('todo-access-token');
+        var jwtToken = Cookies.get('todo-access-token');
         const url = `http://127.0.0.1:8000/todos/${id}/update/`;
         let options = {
             method: 'POST',
@@ -39,7 +39,7 @@ class TodoItem extends Component{
         const {id} = todo
         const url = `http://127.0.0.1:8000/todos/${id}/delete/`;
 
-        var jwtToken = jsCookie.get('todo-access-token');
+        var jwtToken = Cookies.get('todo-access-token');
 
         let options = {
             method: 'DELETE',

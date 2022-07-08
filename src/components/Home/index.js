@@ -57,9 +57,7 @@ class Home extends Component{
             },
         }
         const response = await fetch(url, options);
-        // console.log(response)
         const todoList = await response.json()
-        // console.log(todoList)
         const updatedTodoList = todoList.map(eachTodo =>({
             id:eachTodo.id,
             title:eachTodo.title,

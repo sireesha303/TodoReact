@@ -10,7 +10,6 @@ import UserContext from '../../context/UserContext';
 
 const Login = () => {
     const value = useContext(UserContext); 
-    // console.log(value)
     const {setUserDetails} = value;
 
     const [username,setUsername] = useState()
@@ -20,10 +19,12 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onLoginSuccess = (accessToken,refreshToken) =>{
-        Cookies.set('todo-access-token',accessToken);
-        Cookies.set('todo-refresh-token',refreshToken);
+
+        var inFiveMinutes = new Date(new Date().getTime() + 5 * 60 * 1000);
+        var inOneDay = 1;
+        Cookies.set('todo-access-token',accessToken,{ expires: inFiveMinutes });
+        Cookies.set('todo-refresh-token',refreshToken,{ expires: inOneDay });
         var decodedData = jwt_decode(accessToken);
-        // console.log(decodedData);
         setUserDetails(decodedData.name,decodedData.user_id);
         navigate("/");
     }
