@@ -7,23 +7,19 @@ import UserContext from '../../context/UserContext';
 
 
 class Home extends Component{
-    state = {userSearchInput:"",todoList:[]}
+    state = {userSearchInput:"",todoList:[],isTodoAddingFailed:false}
     static contextType = UserContext;
 
     componentDidMount() {
         this.loadMyTasks()
       }
 
-    componentDidUpdate(){
-        this.loadMyTasks()
-    }
-    
     onChangeOfInputEl = event =>{
         console.log(event.target.value);
         this.setState({userSearchInput:event.target.value})
     }
 
-    onClickOfAddTask = () => {
+    onClickOfAddTask = async () => {
         const context = this.context;
         const taskDescription = {title:this.state.userSearchInput,is_completed:false,owner:context.userId};
         const jwtToken = Cookies.get('todo-access-token');
@@ -38,12 +34,15 @@ class Home extends Component{
             body: JSON.stringify(taskDescription)
         }
 
-        let fetchRes = fetch(url, options);
-        fetchRes.then(res =>res.json()).then(d => {
-                            console.log(d)
-        })
-        this.setState({userSearchInput:""});
-        this.loadMyTasks();
+        let response = await fetch(url, options);
+        if(response.status === 200){
+            this.loadMyTasks();
+            this.setState({userSearchInput:""});
+        }
+        else{
+            this.setState({isTodoAddingFailed:true})
+        }
+        
     }
     loadMyTasks = async () =>{
         const url = "http://127.0.0.1:8000/todos/";
@@ -71,10 +70,8 @@ class Home extends Component{
     }
 
     render(){
-       const {todoList} = this.state;
-       const context = this.context;
-    //    console.log(context)
-
+       const {todoList,isTodoAddingFailed} = this.state;
+    
         return(
             <div className='app-bg-container'>
                 <Header />
@@ -86,6 +83,7 @@ class Home extends Component{
                         <input className='input-el' id='todo-input' type="text" onChange={this.onChangeOfInputEl} value={this.state.userSearchInput}/>
                         <button className='task-add-btn' onClick={this.onClickOfAddTask}>Add Task</button>
                     </div>
+                    {isTodoAddingFailed && <p>Some thing went wrong, your not added.</p>}
                     <TodoList  todoList={todoList}/>
                                     
                 </div>    
