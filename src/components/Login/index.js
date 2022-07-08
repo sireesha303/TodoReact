@@ -19,11 +19,12 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onLoginSuccess = (accessToken,refreshToken) =>{
-
-        var inFiveMinutes = new Date(new Date().getTime() + 5 * 60 * 1000);
-        var inOneDay = 1;
-        Cookies.set('todo-access-token',accessToken,{ expires: inFiveMinutes });
-        Cookies.set('todo-refresh-token',refreshToken,{ expires: inOneDay });
+        var inTMin = new Date(new Date().getTime() + 3 * 60 * 1000)
+        var inOneMin = new Date(new Date().getTime() + 1 * 60 * 1000)
+        // var inFiveMinutes = new Date(new Date().getTime() + 5 * 60 * 1000);
+        // var inOneDay = 1;
+        Cookies.set('todo-access-token',accessToken,{ expires: inOneMin });
+        Cookies.set('todo-refresh-token',refreshToken,{ expires: inTMin });
         var decodedData = jwt_decode(accessToken);
         setUserDetails(decodedData.name,decodedData.user_id);
         navigate("/");
