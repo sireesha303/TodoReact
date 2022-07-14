@@ -1,63 +1,26 @@
 import {useState,useContext} from 'react'
-import Cookies from 'js-cookie';
-import { useNavigate,Link } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
+import {Link } from 'react-router-dom';
 
 
 import "./index.css"
-import UserContext from '../../context/UserContext';
+import AuthContext from '../../context/UserContext';
 
 
 const Login = () => {
-    const value = useContext(UserContext); 
-    const {setUserDetails} = value;
+    // const value = useContext(UserContext); 
+    // const {setUserDetails} = value;
+
+    let {loginUser} = useContext(AuthContext)
 
     const [username,setUsername] = useState()
     const [password,setPassword] = useState()
-    const [loginError,setLoginError] = useState({showLoginError:false,loginErrorMsg:""});
 
-    const navigate = useNavigate();
 
-    const onLoginSuccess = (accessToken,refreshToken) =>{
-        var inTMin = new Date(new Date().getTime() + 3 * 60 * 1000)
-        var inOneMin = new Date(new Date().getTime() + 1 * 60 * 1000)
-        // var inFiveMinutes = new Date(new Date().getTime() + 5 * 60 * 1000);
-        // var inOneDay = 1;
-        Cookies.set('todo-access-token',accessToken,{ expires: inOneMin });
-        Cookies.set('todo-refresh-token',refreshToken,{ expires: inTMin });
-        var decodedData = jwt_decode(accessToken);
-        setUserDetails(decodedData.name,decodedData.user_id);
-        navigate("/");
-    }
-
-    const onLoginFailure = (errorMsg) =>{
-        setLoginError({showLoginError:true,loginErrorMsg:errorMsg})
-    }
-
+    
     const onFormSubmit = async event => {
         event.preventDefault();
-                
-        const url = "http://127.0.0.1:8000/login/"
-        const options ={
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "username":`${username}`,"password":`${password}`}),
-        };
+        loginUser(username,password)
 
-        const response = await fetch(url,options)
-        console.log(response)
-        const data = await response.json();
-        console.log(data)
-
-        if(response.ok === true){
-            onLoginSuccess(data.access,data.refresh)
-        }
-        else{
-            onLoginFailure(data.detail)
-        }
     }
 
     const onChangeOfUsername = event => {
@@ -110,7 +73,6 @@ const Login = () => {
                 <div className="submit-btn-container"> 
                     <button type="submit" className="submit-btn">Login</button>
                 </div>
-                {loginError.showLoginError && <p className='login-fail-msg'>*{loginError.loginErrorMsg}</p>}
             </form>
             <div>
                 <img src="https://res.cloudinary.com/sireesha30/image/upload/v1656604518/todo_zefcgt.jpg" 

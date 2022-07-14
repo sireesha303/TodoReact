@@ -1,28 +1,21 @@
 import './index.css'
-import UserContext from '../../context/UserContext';
-import jsCookie from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-
+import AuthContext from '../../context/UserContext';
 
 const Header = () => {
+
+    let {user,logoutUser} = useContext(AuthContext)
          
-    const value = useContext(UserContext);
-    const {name} = value
-
-    const navigate = useNavigate();
-
+    const userName = user.name
     const onClickOfLogout = () =>{
-        jsCookie.remove('todo-access-token');
-        jsCookie.remove('todo-refresh-token');
-        navigate("/login");
+        logoutUser()
     }
 
     return(
         <div className="header-bg-container">
             <h1 className='app-header'>Todo's Tracker</h1>
             <ul className="nav-items-list">
-                <h1 className='greet-el'>Hello <span className='user-name'>{name}</span></h1>
+                <h1 className='greet-el'>Hello <span className='user-name'>{userName}</span></h1>
                     <li className='link-item'>
                          <button className="route-link" onClick={onClickOfLogout}>Logout</button>
                     </li>

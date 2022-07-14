@@ -32,7 +32,7 @@ const Signup = () =>{
     const onFormSubmit = async event =>{
         event.preventDefault();
 
-        const url = "http://127.0.0.1:8000/account/users/"
+        const url = "https://todoapp-django-backend.herokuapp.com/account/users/"
         const options ={
             method: 'POST',
             headers: {
@@ -55,12 +55,7 @@ const Signup = () =>{
         else{
             setSignupFailed(true);
             setSignupSuccess(false);
-            if(data.email){
-                setSignupFailedReason(data.email);
-            }
-            else if(data.username){
-                setSignupFailedReason(data.username)
-            }
+            setSignupFailedReason(Object.values(data)[0])
         }
     }
 
