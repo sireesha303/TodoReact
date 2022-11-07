@@ -3,6 +3,8 @@ import './index.css'
 import Header from '../Header';
 import AuthContext from '../../context/UserContext';
 import TodoItem from '../TodoItem';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
     const [todoInput,setTodoInput] = useState("")
@@ -64,7 +66,7 @@ const Home = () => {
             owner:eachTodo.owner
         }))
         setTodoList(updatedTodoList)
-        console.log(updatedTodoList.length)
+        // console.log(updatedTodoList.length)
         if(updatedTodoList.length>0){
             setIsTodosExisted(true)
         }else{
@@ -98,11 +100,17 @@ const Home = () => {
 
             let response = await fetch(url, options);
             if(response.status === 200){
-                alert("your todo updated successfully..")
+                // alert("your todo updated successfully..")
+                toast.success('your todo updated successfully..!', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
                 loadMyTasks()
             }
             else{
-                alert("your updation failed..")
+                // alert("your updation failed..")
+                toast.error('your todo updation failed.', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
             }
 
         }  
@@ -122,11 +130,17 @@ const Home = () => {
 
         let response = await fetch(url, options);
         if(response.status === 200){
-            alert("your todo deleted successfully..")
+            // alert("your todo deleted successfully..")
+            toast.success('your todo deleted successfully..!', {
+                position: toast.POSITION.TOP_RIGHT
+            });
             loadMyTasks()
         }
         else{
-            alert("your deletion failed..")
+            // alert("your deletion failed..")
+            toast.error('your todo deletion failed.', {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
     }
 
@@ -158,7 +172,7 @@ const Home = () => {
                    
                 }
                     
-                
+                <ToastContainer />
                                     
             </div>    
         </div>
