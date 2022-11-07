@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from 'react'
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthContext = createContext()
 
@@ -17,6 +19,7 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate()
 
     let loginUser = async (username,password )=> {
+
         let response = await fetch('https://todoapp-django-backend.herokuapp.com/login/', {
             method:'POST',
             headers:{
@@ -38,7 +41,10 @@ export const AuthProvider = ({children}) => {
             Cookies.set('todo-refreshToken',data.refresh,{expires:2})
             navigate('/')
         }else{
-            alert('Something went wrong!.. Not able to found the user account with given Details..')
+            // alert('Something went wrong!.. Not able to found the user account with given Details..')
+            toast.error('Error : Incorrect username or password entered.', {
+                position: toast.POSITION.TOP_CENTER
+            });
         }
     }
 

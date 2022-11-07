@@ -1,6 +1,7 @@
 import {useState,useContext} from 'react'
 import {Link } from 'react-router-dom';
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./index.css"
 import AuthContext from '../../context/UserContext';
@@ -19,7 +20,25 @@ const Login = () => {
     
     const onFormSubmit = async event => {
         event.preventDefault();
-        loginUser(username,password)
+        console.log(username)
+        if(username !== undefined && password !== undefined){
+            loginUser(username,password)
+            
+        }
+        else{
+            if(username === undefined){
+                toast.warning('Username Required.', {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }
+            if(password === undefined){
+                toast.warning('Password Required.', {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }
+            
+        }
+        
 
     }
 
@@ -59,7 +78,8 @@ const Login = () => {
             </div>
         )
     }
-    
+
+
     return(
         <div className="login-bg-container">
             <div className="login-contents-container">
@@ -80,6 +100,7 @@ const Login = () => {
                 className="login-page-image"
                 />
             </div>
+            <ToastContainer />
 
             </div>
             
