@@ -21,6 +21,13 @@
     border-radius: 5px;
 }
 
+@media screen and (max-width:768px) {
+    .signup-contents-container{
+        width: 75%;
+       
+    }
+}
+
 .signup-input-el{
     margin: 10px;
     width: 50%;
