@@ -20,18 +20,22 @@ const Login = () => {
     
     const onFormSubmit = async event => {
         event.preventDefault();
-        console.log(username)
-        if(username !== undefined && password !== undefined){
+        // console.log(username)
+        // console.log(username.length)
+        // let trimmedUsername = username.trim();
+        // let trimmedPassword = password.trim();
+        if((username !== undefined && username.trim().length >0 )&& (password !== undefined && password.trim().length >0)){
+            
             loginUser(username,password)
             
         }
         else{
-            if(username === undefined){
+            if(username === undefined || username.trim().length === 0){
                 toast.warning('Username Required.', {
                     position: toast.POSITION.TOP_CENTER
                 });
             }
-            if(password === undefined){
+            if(password === undefined || password.trim().length === 0){
                 toast.warning('Password Required.', {
                     position: toast.POSITION.TOP_CENTER
                 });
