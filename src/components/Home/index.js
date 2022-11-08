@@ -5,12 +5,19 @@ import AuthContext from '../../context/UserContext';
 import TodoItem from '../TodoItem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {ThreeDots} from 'react-loader-spinner';
+
+const TodosExistedStatus = {
+    initial : 'INITIAL',
+    existed: 'EXISTED',
+    notexisted: 'NOTEXISTED'
+}
 
 const Home = () => {
     const [todoInput,setTodoInput] = useState("")
     const [todoList,setTodoList]  = useState([])
     const [isTodoAddingFailed,setTodoAddingFailedStatus] = useState(false)
-    const [isTodosExisted,setIsTodosExisted] = useState()
+    const [isTodosExisted,setIsTodosExisted] = useState(TodosExistedStatus.initial)
 
     let {user,accessToken} = useContext(AuthContext)
     let jwtToken = accessToken.access
@@ -68,9 +75,9 @@ const Home = () => {
         setTodoList(updatedTodoList)
         // console.log(updatedTodoList.length)
         if(updatedTodoList.length>0){
-            setIsTodosExisted(true)
+            setIsTodosExisted(TodosExistedStatus.existed)
         }else{
-            setIsTodosExisted(false)
+            setIsTodosExisted(TodosExistedStatus.notexisted)
         }
     }
 
@@ -148,6 +155,26 @@ const Home = () => {
         loadMyTasks()
     }
     ,[])
+
+    const getTodos = () =>{
+        switch(isTodosExisted){
+            case TodosExistedStatus.initial:
+                return <ThreeDots type="TailSpin" color="black" height={100} width={50} />
+            case TodosExistedStatus.existed:
+                return  <div className='todo-list-container'>
+                <ul className="todo-list">
+                    {todoList.map(eachTodo=>(<TodoItem todo={eachTodo} key={eachTodo.id} updateTodo={updateTodo} deleteTodo={deleteTodo}/>))}
+                </ul>
+            </div>
+            case TodosExistedStatus.notexisted:
+                return <div className='no-todos-container'>
+                <img src="https://res.cloudinary.com/sireesha30/image/upload/v1657094877/mployee-empowerment_gsmdq9.png" alt="productiveity-img" className='productivity-img'/>
+                <p className='no-todos-text'>You don't have any Todos existed..add here your Todo's to increase Productivity!..</p>
+            </div>
+            default:
+                return null
+        }
+    }
     
     return(
         <div className='app-bg-container'>
@@ -160,17 +187,7 @@ const Home = () => {
                     <button className='task-add-btn' onClick={onClickOfAddTask}>Add Task</button>
                 </div>
                 {isTodoAddingFailed && <p>Some thing went wrong, your todo not added.</p>}
-                {isTodosExisted ? 
-                    <div className='todo-list-container'>
-                        <ul className="todo-list">
-                            {todoList.map(eachTodo=>(<TodoItem todo={eachTodo} key={eachTodo.id} updateTodo={updateTodo} deleteTodo={deleteTodo}/>))}
-                        </ul>
-                    </div>:<div className='no-todos-container'>
-                        <img src="https://res.cloudinary.com/sireesha30/image/upload/v1657094877/mployee-empowerment_gsmdq9.png" alt="productiveity-img" className='productivity-img'/>
-                        <p className='no-todos-text'>You don't have any Todos existed..add here your Todo's to increase Productivity!..</p>
-                    </div>
-                   
-                }
+                { getTodos() }
                     
                 <ToastContainer />
                                     
