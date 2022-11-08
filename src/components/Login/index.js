@@ -2,6 +2,7 @@ import {useState,useContext} from 'react'
 import {Link } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {ThreeDots} from 'react-loader-spinner'
 
 import "./index.css"
 import AuthContext from '../../context/UserContext';
@@ -15,18 +16,15 @@ const Login = () => {
 
     const [username,setUsername] = useState()
     const [password,setPassword] = useState()
-
+    const [isLoginLoading, setLoginLoading] = useState(false)
 
     
     const onFormSubmit = async event => {
         event.preventDefault();
-        // console.log(username)
-        // console.log(username.length)
-        // let trimmedUsername = username.trim();
-        // let trimmedPassword = password.trim();
+        
         if((username !== undefined && username.trim().length >0 )&& (password !== undefined && password.trim().length >0)){
-            
-            loginUser(username,password)
+            setLoginLoading(true)
+            loginUser(username,password,setLoginLoading)
             
         }
         else{
@@ -34,6 +32,7 @@ const Login = () => {
                 toast.warning('Username Required.', {
                     position: toast.POSITION.TOP_CENTER
                 });
+                
             }
             if(password === undefined || password.trim().length === 0){
                 toast.warning('Password Required.', {
@@ -96,6 +95,8 @@ const Login = () => {
                 </div>
                 <div className="submit-btn-container"> 
                     <button type="submit" className="submit-btn">Login</button>
+                    {isLoginLoading? <ThreeDots type="TailSpin" color="black" height={50} width={60} />:null}
+
                 </div>
             </form>
             <div>

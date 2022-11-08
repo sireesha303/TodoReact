@@ -18,7 +18,7 @@ export const AuthProvider = ({children}) => {
 
     const navigate = useNavigate()
 
-    let loginUser = async (username,password )=> {
+    let loginUser = async (username,password,setLoginLoading)=> {
 
         let response = await fetch('https://todoapp-django-backend.herokuapp.com/login/', {
             method:'POST',
@@ -30,6 +30,7 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':username, 'password':password})
         })
         let data = await response.json()
+        setLoginLoading(false)
 
         console.log(response)
         if(response.status === 200){
