@@ -39,6 +39,6 @@ authorized HTTP Api calls.
 
 
 ## Checkout URL
-* [Todo Tracker](https://todos-tracker.herokuapp.com/)
+* [Todo Tracker](https://todo-tracker-react.vercel.app/)
 
 
