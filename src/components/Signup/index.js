@@ -32,7 +32,7 @@ const Signup = () =>{
     const onFormSubmit = async event =>{
         event.preventDefault();
 
-        const url = "https://todoapp-django-backend.herokuapp.com/account/users/"
+        const url = "https://todoapp-django-backend.up.railway.app/account/users/"
         const options ={
             method: 'POST',
             headers: {

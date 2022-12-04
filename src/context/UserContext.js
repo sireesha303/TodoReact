@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (username,password,setLoginLoading)=> {
 
-        let response = await fetch('https://todoapp-django-backend.herokuapp.com/login/', {
+        let response = await fetch('https://todoapp-django-backend.up.railway.app/login/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -63,7 +63,7 @@ export const AuthProvider = ({children}) => {
         const refreshToken = Cookies.get('todo-refreshToken')
 
         if(refreshToken !== undefined){
-            let response = await fetch('https://todoapp-django-backend.herokuapp.com/token/refresh/', {
+            let response = await fetch('https://todoapp-django-backend.up.railway.app/token/refresh/', {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

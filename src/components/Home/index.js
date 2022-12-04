@@ -31,7 +31,7 @@ const Home = () => {
         const taskDescription = {title:todoInput,is_completed:false,owner:user.user_id};
         const jwtToken = accessToken.access
 
-        const url = "https://todoapp-django-backend.herokuapp.com/todos/add/";
+        const url = "https://todoapp-django-backend.up.railway.app/todos/add/";
         let options = {
             method: 'POST',
             headers: {
@@ -54,7 +54,7 @@ const Home = () => {
     }
 
     const loadMyTasks = async () =>{
-        const url = "https://todoapp-django-backend.herokuapp.com/todos/";
+        const url = "https://todoapp-django-backend.up.railway.app/todos/";
         const jwtToken = accessToken.access;
         let options = {
             method: 'GET',
@@ -94,7 +94,7 @@ const Home = () => {
             const todoUpdated = {id:id,title:title,is_completed:!isCompleted,owner:userId}
 
         
-            const url = `https://todoapp-django-backend.herokuapp.com/todos/${id}/update/`;
+            const url = `https://todoapp-django-backend.up.railway.app/todos/${id}/update/`;
             let options = {
                 method: 'POST',
                 headers: {
@@ -124,7 +124,7 @@ const Home = () => {
     }
     
     const deleteTodo = async id =>{
-        const url = `https://todoapp-django-backend.herokuapp.com/todos/${id}/delete/`;
+        const url = `https://todoapp-django-backend.up.railway.app/todos/${id}/delete/`;
 
         let options = {
             method: 'DELETE',
