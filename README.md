@@ -9,7 +9,7 @@
 
 
 ### Technical
-* Heroku Deployed Single page responsive web application.
+* Vercel Deployed Single page responsive web application.
 * Implemented different routes like login, home, jobs, job details using react
 components, lists, hooks,event handlers.
 * Persisted user login in system by storing the jwt token in one of client side storage mechanisam cookies.
